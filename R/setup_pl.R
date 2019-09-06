@@ -110,7 +110,7 @@ setup_pl <- function(setup = NULL) {
     while (!done) {
       inp <- readline(paste0("Do you want to register a partial brain (P) or a wholebrain (W): P/W? ",
                              "\nNote: partial brains must have KNOWN z and AP values!\n"))
-      if (inp=="P" || inp=="p") {
+      if (tolower(inp) == "p") {
 
         # Initializing setup for a partial brain analysis
         setup <- vector(mode = "list", length = 9)
@@ -128,6 +128,10 @@ setup_pl <- function(setup = NULL) {
         # 5)  Output folder path to store data
         setup[[5]] <- convertpath(readline(user_prompt2[[5]]))
         # 6) Vector to store known AP coordinates
+
+        # TODO: shouldn't it be better to provide a csv with known coordinates?
+        # adding with commas is not the best user experience
+
         setup[[6]] <- readline(user_prompt2[[6]])
         setup[[6]] <- roundAP(as.numeric(unlist(strsplit(setup[[6]], ","))))
         # 7) Vector to store known z numbers
@@ -139,7 +143,7 @@ setup_pl <- function(setup = NULL) {
                            "regi_AP", "regi_z", "savepaths", "image_paths")
         done <- TRUE
 
-      } else if (inp=="W" || inp=="w") {
+      } else if (tolower(inp)=="w") {
 
         # Initializing setup for a whole brain analysis
         setup <- vector(mode = "list", length = 18)
@@ -204,7 +208,7 @@ setup_pl <- function(setup = NULL) {
       cat("\nYour z numbers         : ", setup$regi_z)
       cat("\nPlease review your setup information above: ")
       inp <- readline("Do you want to change any settings: Y/N?" )
-      if (inp=="Y" || inp=="y") {
+      if (tolower(inp)=="y") {
         # change settings
         cat("\n1) Animal ID",
             "\n2) User's Initials",
@@ -271,7 +275,7 @@ setup_pl <- function(setup = NULL) {
             setup[[s]] <- round(as.numeric(unlist(strsplit(setup[[s]], ","))), digits=0)
           }
         }
-      } else if ( inp=="N" || inp == "n") {
+      } else if (tolower(inp)=="n") {
         # exit out of loop
         change_done  <- TRUE
       }
@@ -299,7 +303,7 @@ setup_pl <- function(setup = NULL) {
 
       cat("\nPlease review your setup information above: ")
       inp <- readline("Do you want to change any settings: Y/N?" )
-      if (inp=="Y" || inp=="y") {
+      if (tolower(inp)=="y") {
 
         # change settings
         cat("\n1) Animal ID",
@@ -374,12 +378,14 @@ setup_pl <- function(setup = NULL) {
             setup[[s]] <- as.numeric(readline(user_prompt[[s]]))
           }
         }
-      } else if ( inp=="N" || inp == "n") {
+      } else if (tolower(inp)=="n") {
         # exit out of loop
         change_done  <- TRUE
       }
     }
   }
+
+ # changing the user's working directory is not recommended
  setwd(setup$output)
  return(setup)
 }

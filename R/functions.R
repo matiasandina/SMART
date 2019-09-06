@@ -10,10 +10,11 @@
 #' @export
 # return plate number based on entered AP
 platereturn <- function(AP) {
-  ind <-c()
-  for (n in 1:length(AP)){
-    ind <- c(ind, which.min(abs(AP[n]-atlasIndex$mm.from.bregma[1:132])))
-  }
+
+  # we can switch to "sagittal" if needed
+  atlas_sub <- atlasIndex[atlasIndex$plane == "coronal", "mm.from.bregma"]
+  ind <- sapply(AP, function(x) which.min(abs(x - atlas_sub)))
+
   return(ind)
 }
 
@@ -26,13 +27,18 @@ AMBA_return <- function(AP){
 
 #' @export
 # Rounds to nearest atlas coordinate in whole brain (coronal)
-roundAP <- function(AP) {
-  # AP can be a vector of values
-  vec   <- c()
-  for (n in 1:length(AP)){
-    ind    <- which.min(abs(AP[n]-atlasIndex$mm.from.bregma[1:132]))
-    vec[n] <- atlasIndex$mm.from.bregma[1:132][ind]
+roundAP <- function(AP, plane="coronal") {
+  # check input
+  if(!plane %in% c("coronal", "sagittal")){
+    stop(sprintf("Plane must be `coronal`` or `sagittal`.\n`%s` was provided", plane))
   }
+
+  # perform atlasIndex subset only once outside the loop
+  atlas_sub <- atlasIndex[atlasIndex$plane == plane, "mm.from.bregma"]
+  # get the indices of the closest positions to AP queries
+  ind    <- sapply(AP, function(x) which.min(abs(x - atlas_sub)))
+  # subset the mm from bregma
+  vec <- atlas_sub[ind]
   return(vec)
 }
 
