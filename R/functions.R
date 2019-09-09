@@ -101,4 +101,20 @@ get_hemi_cnts <- function(dataset, roi = c('MO', 'TH'), hemi= "Right"){
   return(roi.data)
 }
 
+# This function allows to generate options in the vecinity of selected AP
+# It sorts them from most anterior (positive) to most posterior (negative)
+generate_AP_options <- function(AP, resolution){
+
+  # let's make values 4 values to each side from given resolution
+  val_range <- 1:4 * resolution
+
+  values <- c(sort(AP - val_range),
+                   AP,
+                   sort(AP + val_range))
+  # now sorting with decreasing = TRUE for AP correct order
+  values <- sort(values, decreasing = TRUE)
+
+  return(values)
+}
+
 
