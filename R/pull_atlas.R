@@ -16,7 +16,7 @@ pull_atlas <- function(AP, xpos = 0, x = 0, adj = c( -1, 0),
                        new_device=TRUE){
   # no width makes error on Ubuntu systems
   if(is.null(width) && get_os() == "linux"){
-    width <- 5
+    width <- 10
   }
   window_title <- paste0("Plate ", toString(platereturn(AP)),", AP ", toString(round(roundAP(AP), digits=2)))
   # we can wrap this call in a purr::map with new_device=FALSE (plot more than one tile)
