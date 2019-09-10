@@ -3,11 +3,13 @@
 #'   If image titles are not in AP order, it prompts user to establish order
 #'   and rename files properly into Z planes
 #' @param img_folder path of folder where images are stored
-#' @param
+#' @param filetype type of the files, pattern fed to `list.files(...)`
 #' @details
 
-img_folder <- "/media/mike/Elements/Axio Scan/raw_data/MG952/001/001/small"
+# TODO: Change name of the function to something more proper
 
+# img_folder <- "/media/mike/Elements/Axio Scan/raw_data/MG952/001/001/small"
+#' @export
 rename_AP_order <- function(img_folder, filetype=c(".tif")){
 
   # load atlasIndex
@@ -26,6 +28,8 @@ rename_AP_order <- function(img_folder, filetype=c(".tif")){
                    mm.from.bregma = NA,
                    stringsAsFactors = FALSE)
 
+  # calculate this to provide some feedback
+  images_to_go <- length(files)
 
   # enter for loop
   for (image in files){
@@ -146,6 +150,11 @@ rename_AP_order <- function(img_folder, filetype=c(".tif")){
       }
     }
 
+    # Close all graphs
+    graphics.off()
+    cat(sprintf("Done with %s of %s images.",
+                as.character(which(files == files[image])),
+                as.character(images_to_go)))
     cat("Moving to next image")
   }
 

@@ -67,6 +67,7 @@ get_all_children <- function (rois, children = c()) {
   return(children)
 }
 
+#' @export
 # Get current OS
 get_os <- function(){
   sysinf <- Sys.info()
@@ -84,12 +85,14 @@ get_os <- function(){
   return(tolower(os))
 }
 
+#' @export
 # convertpath for windows users
 convertpath <- function(path){
   return(gsub("\\\\", "/", path, ignore.case = FALSE, perl = FALSE,
        fixed = FALSE, useBytes = FALSE))
 }
 
+#' @export
 # Get counts based on hemisphere
 get_hemi_cnts <- function(dataset, roi = c('MO', 'TH'), hemi= "Right"){
   if (hemi == "Right") {
@@ -101,6 +104,7 @@ get_hemi_cnts <- function(dataset, roi = c('MO', 'TH'), hemi= "Right"){
   return(roi.data)
 }
 
+#' @export
 # This function allows to generate options in the vecinity of selected AP
 # It sorts them from most anterior (positive) to most posterior (negative)
 generate_AP_options <- function(AP, resolution){
