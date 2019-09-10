@@ -158,6 +158,8 @@ rename_AP_order <- function(img_folder, filetype=c(".tif")){
     cat("Moving to next image")
   }
 
+  # return par
+  par(mfrow=c(1, 1))
   return(df)
   }
 
