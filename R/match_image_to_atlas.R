@@ -1,23 +1,32 @@
-#' @title User friendly way to put images into order and rename them before setup
+#' @title User friendly way to put images into order with atlas
 #' @description Asks user for folder where images are stored.
-#'   If image titles are not in AP order, it prompts user to establish order
-#'   and rename files properly into Z planes
+#'   It prompts user to align images to better suited plate on atlas.
 #' @param img_folder path of folder where images are stored
+#' @param ind_img individual image in case this function needs to be called on one image. Save not possible in this case.
 #' @param filetype type of the files, pattern fed to `list.files(...)`
-#' @details
 
 # TODO: Change name of the function to something more proper
 
 # img_folder <- "/media/mike/Elements/Axio Scan/raw_data/MG952/001/001/small"
 #' @export
-match_image_to_atlas <- function(img_folder, filetype=c(".tif")){
+match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL, filetype=c(".tif")){
 
   # load atlasIndex
   if(!exists("atlasIndex", envir = .GlobalEnv)){
   load(file.path(.libPaths()[1],"wholebrain","data","atlasIndex.RData"))
   }
 
-  files <- list.files(img_folder, pattern = filetype, full.names = TRUE)
+  # throw error if both the img_folder and ind_img are null
+  if(is.null(img_folder) & is.null(ind_img)){
+    stop("Both `img_folder` & `ind_img` are NULL. Please provide one non NULL argument")
+  }
+
+  if(is.null(ind_img)){
+    files <- list.files(img_folder, pattern = filetype, full.names = TRUE)
+  } else {
+    # might have path problems here..
+    files <- ind_img
+  }
 
   # helper for image equalization
   # see https://cran.r-project.org/web/packages/imager/vignettes/gettingstarted.html
@@ -130,10 +139,14 @@ match_image_to_atlas <- function(img_folder, filetype=c(".tif")){
         while(enter_saving){
           save_progress <- readline("Do you want to save (Y/N)? :> ")
             if(tolower(save_progress)=="y"){
-
-              saveRDS(df, file=file.path(dirname(img_folder), "atlas_img_path_df"))
-              message("Progress was saved, moving on :)")
-              enter_saving <- FALSE
+              if(is.null(ind_img)){
+                saveRDS(df, file=file.path(dirname(img_folder), "atlas_img_path_df"))
+                message("Progress was saved, moving on :)")
+                enter_saving <- FALSE
+              } else {
+                 message("Cannot save individual image, use the return object")
+                 enter_saving <- FALSE
+                }
           }
             else if(tolower(save_progress)=="n"){
             message("Progress was not saved!")

@@ -2,17 +2,19 @@
 % Please edit documentation in R/match_image_to_atlas.R
 \name{match_image_to_atlas}
 \alias{match_image_to_atlas}
-\title{User friendly way to put images into order and rename them before setup}
+\title{User friendly way to put images into order with atlas}
 \usage{
-match_image_to_atlas(img_folder, filetype = c(".tif"))
+match_image_to_atlas(img_folder = NULL, ind_img = NULL,
+  filetype = c(".tif"))
 }
 \arguments{
 \item{img_folder}{path of folder where images are stored}
+
+\item{ind_img}{individual image in case this function needs to be called on one image. Save not possible in this case.}
 
 \item{filetype}{type of the files, pattern fed to `list.files(...)`}
 }
 \description{
 Asks user for folder where images are stored.
-  If image titles are not in AP order, it prompts user to establish order
-  and rename files properly into Z planes
+  It prompts user to align images to better suited plate on atlas.
 }

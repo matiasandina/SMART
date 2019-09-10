@@ -62,6 +62,11 @@
 
 setup_pl <- function(setup = NULL) {
 
+  # TODO: Shouldn't it be better to name directly
+  # setup$anim_ID <-  instead of setup[[1]] <- and then calling names()?
+  # it's easier for debug to find where the assignment happened
+  # also applies to user_prompt[[i]] and it happens that they are not in order
+
   # Setup user prompts for whole brain
   user_prompt <- vector(mode = "list", length = 13)
   user_prompt[[1]]  <- "1) Enter your Animal ID: \n"
