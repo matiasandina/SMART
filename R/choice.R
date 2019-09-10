@@ -82,9 +82,9 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
 
 
       line  <- TRUE
-      while (line != "Y" & line!="y" & line !="N" & line != "n"){
+      while (tolower(line)!="y" & tolower(line)!="n"){
         line <- readline("Do you like the image alignment? Y/N:" )
-        if (line == "N" || line == "n"){
+        if (tolower(line) == "n"){
           loop_AP   <- c(loop_AP, midpnt_ref_AP[n])
           loop_z    <- c(loop_z , midpnt_ref_z[n])
         }

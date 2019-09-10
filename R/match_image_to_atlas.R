@@ -10,7 +10,7 @@
 
 # img_folder <- "/media/mike/Elements/Axio Scan/raw_data/MG952/001/001/small"
 #' @export
-rename_AP_order <- function(img_folder, filetype=c(".tif")){
+match_image_to_atlas <- function(img_folder, filetype=c(".tif")){
 
   # load atlasIndex
   if(!exists("atlasIndex", envir = .GlobalEnv)){
