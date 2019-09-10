@@ -36,14 +36,14 @@ rename_AP_order <- function(img_folder, filetype=c(".tif")){
     # show first image
     # TODO: fix the width issue
     window_title <- basename(image)
-    quartz(width = 5, title=window_title)
+    quartz(width = 10, title=window_title)
     # img <- magick::image_read() # this way needs a lot of rescaling no?
     img <- imager::load.image(image)
 
     plot(img)
 
     # let's do a bit of enhancement of the channel
-    quartz(width = 5, title = paste("Equalized", window_title))
+    quartz(width = 10, title = paste("Equalized", window_title))
 
     # equalized histogram
     plot(hist.eq(img))
