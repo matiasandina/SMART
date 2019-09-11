@@ -12,6 +12,8 @@
 
 get_savepaths <- function (setup) {
 
+  # TODO: should you tell the user that you are creating all those directories?
+
   ## Creating data directories
   # Folder to store R data. Note: script will periodically save to this folder throughout analysis
   out_R_data <- file.path(setup$output, "R_data")
