@@ -30,7 +30,7 @@ rename_AP <- function(match_df){
         # let's do a bit of enhancement of the channel
         quartz(width = 10, title = paste("Equalized", window_title))
         # equalized histogram
-        plot(hist.eq(img), main = paste0(img_counter, ") ", basename(image)))
+        plot(hist.eq(img), main = paste0(img_counter, ") ", basename(image)), axes=FALSE)
         img_counter <- img_counter + 1
       }
 

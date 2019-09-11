@@ -7,7 +7,6 @@
 
 # TODO: Change name of the function to something more proper
 
-# img_folder <- "/media/mike/Elements/Axio Scan/raw_data/MG952/001/001/small"
 #' @export
 match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL, filetype=c(".tif")){
 
@@ -49,13 +48,13 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL, filetype=c(".tif
     # img <- magick::image_read() # this way needs a lot of rescaling no?
     img <- imager::load.image(image)
 
-    plot(img)
+    plot(img, axes=FALSE)
 
     # let's do a bit of enhancement of the channel
     quartz(width = 10, title = paste("Equalized", window_title))
 
     # equalized histogram
-    plot(hist.eq(img))
+    plot(hist.eq(img), axes=FALSE)
 
     first_guess <- as.numeric(readline("what is your first guess for AP level? :> "))
 
