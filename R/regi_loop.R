@@ -56,6 +56,13 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
   }
 
   if (autoloop) {
+
+    # if length of filter is < 1 (either it's 1 or NULL length 0),
+    # repete it so we can subset, else leave it as is
+    if(length(filter) < 1){
+      filter <- rep(filter, length(setup$regi_z))
+      }
+
     tictoc::tic()
     # Run autoloop if you want to automatically run first pass registration.
     # Output images will be saved in folder structure setup$savepaths$out_auto_registration.
@@ -67,8 +74,12 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
 
       # Register image
       quartz(width, height)
-      regis[[s]] <<- wholebrain::registration(setup$image_paths$regi_paths[imnum], AP,
-                                              plane = plane, filter = filter, display = TRUE,
+      #regis[[s]] <<- wholebrain::registration(setup$image_paths$regi_paths[imnum], AP,
+      #                                        plane = plane, filter = filter[[s]], display = TRUE,
+      #                                        output.folder = setup$savepaths$out_registration_warps)
+
+      regis[[s]] <<- registration_MLA(setup$image_paths$regi_paths[imnum], AP,
+                                              plane = plane, filter = filter[[s]], display = TRUE,
                                               output.folder = setup$savepaths$out_registration_warps)
 
       ## save, annotate, then resave the registration image using magick.
@@ -78,7 +89,7 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
 
       # Saving image. Note: the extra window is to correct for a bug in savePlot in windows
       curwin <- dev.cur()
-      quartz()
+      quartz(width = 5)
       savePlot(filename = savepath, type = filetype, device = curwin)
       graphics.off()
 
