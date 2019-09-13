@@ -55,13 +55,13 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
                 "\nPlease assign the 'regis' variable to the regis argument."))
   }
 
-  if (autoloop) {
+  # if length of filter is <= 1 (either it's 1 or NULL length 0),
+  # repete it so we can subset, else leave it as is
+  if(length(filter) <= 1){
+    filter <- rep(filter, length(setup$regi_z))
+  }
 
-    # if length of filter is < 1 (either it's 1 or NULL length 0),
-    # repete it so we can subset, else leave it as is
-    if(length(filter) < 1){
-      filter <- rep(filter, length(setup$regi_z))
-      }
+  if (autoloop) {
 
     tictoc::tic()
     # Run autoloop if you want to automatically run first pass registration.
@@ -89,7 +89,7 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
 
       # Saving image. Note: the extra window is to correct for a bug in savePlot in windows
       curwin <- dev.cur()
-      quartz(width = 5)
+      quartz(width = width)
       savePlot(filename = savepath, type = filetype, device = curwin)
       graphics.off()
 
@@ -210,13 +210,13 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
         image <- magick::image_annotate(image, paste0("Plate ", toString(platereturn(AP)),", AP ",
                                                       toString(round(AP, digits=2)), ", z ", toString(imnum)),
                                         gravity = gravity, size= font_size , color = font_col, location = font_location)
-        quartz(canvas="black", title= paste("z-slice ", toString(imnum)))
+        quartz(width=width, canvas="black", title= paste("z-slice ", toString(imnum)))
         popup_cur <- dev.cur()
         plot(image)
 
         quartz(width, height)    # dummy window
         # Run registration improvement loop
-        regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter,
+        regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter[[s]],
                                          correspondance = regis[[index]], plane = plane,
                                          closewindow = closewindow,
                                          output.folder = setup$savepaths$out_registration_warps,
@@ -228,7 +228,7 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
 
         # Run registration improvement loop
         regis[[index]] <<-list(NULL) # Clear memory space
-        regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter,
+        regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter[[s]],
                                          correspondance = regis[[index]], plane = plane,
                                          closewindow = closewindow,
                                          output.folder = setup$savepaths$out_registration_warps,
@@ -242,7 +242,7 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
 
       # Saving image. Note: the extra window is to correct for a bug in savePlot in windows
       curwin <- dev.cur()
-      quartz()
+      quartz(width=width)
       savePlot(filename = savepath, type = filetype, device = curwin)
       graphics.off()
 
