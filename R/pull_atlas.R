@@ -21,8 +21,13 @@ pull_atlas <- function(AP, xpos = 0, x = 0, adj = c( -1, 0),
   window_title <- paste0("Plate ", toString(platereturn(AP)),", AP ", toString(round(roundAP(AP), digits=2)))
   # we can wrap this call in a purr::map with new_device=FALSE (plot more than one tile)
   if(new_device){
-    quartz(width = width,
+    if(get_os() == "osx"){
+     quartz(width = width, title= window_title)
+    } else {
+     quartz(width = width,
            title = window_title, xpos = xpos)
+    }
+
 
   }
   wholebrain::schematic.plot(dataset = NULL, mm.grid=F, coordinate = roundAP(AP), region.colors =  TRUE, device = F)
