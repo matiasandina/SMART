@@ -14,6 +14,9 @@ gg_brain <- function(contour_list, grayscale=TRUE, color=FALSE, fill=FALSE){
     mutate_at(vars("xrT", "yrT", "xlT", "ylT"),
               .funs = ~. * scale_factor)
 
+  # TODO: when fill/color is passed inside aes() it's not interpreted as literal
+  # see https://stackoverflow.com/questions/28206129/hexadecimal-colors-in-ggplot-not-colored-as-expected
+
   p1 <-  df %>%
       #  mutate(border_color = rep(regi$atlas$col, 68))%>%
       ggplot(aes(group=contour.ID, fill=color))+
