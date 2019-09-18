@@ -53,9 +53,9 @@
         new$type <- type
       if (!missing(dpi))
         new$dpi <- dpi
-      if (!checkIntFormat(new$title))
+      if (!grDevices:::checkIntFormat(new$title))
         stop("invalid 'title'")
-      if (!is.null(file) && !checkIntFormat(file))
+      if (!is.null(file) && !grDevices:::checkIntFormat(file))
         stop("invalid 'file'")
       d <- check.options(new, name.opt = ".quartz.Options", envir = .Quartzenv)
       .External(C_Quartz, d$type, file, d$width, d$height, d$pointsize,
