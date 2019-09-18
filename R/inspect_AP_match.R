@@ -11,7 +11,7 @@ inspect_AP_match <- function(match_df){
   for(i in 1:n_row){
     if(i==1){
       # first device
-      quartz(widt=10, xpos=0)
+      quartz(width=10, xpos=0)
       # second device
       quartz(width=10, xpos=900)
     }
