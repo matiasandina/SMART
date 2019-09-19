@@ -11,9 +11,9 @@ inspect_AP_match <- function(match_df){
   for(i in 1:n_row){
     if(i==1){
       # first device
-      quartz(width=10, xpos=0)
+      quartz(width=10)
       # second device
-      quartz(width=10, xpos=900)
+      quartz(width=10)
     }
     # set current device to previous device
     dev.set(dev.prev())
