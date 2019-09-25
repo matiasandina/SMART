@@ -180,3 +180,16 @@ choose_directory <- function(ini_dir = getwd(),
          readline('Please enter directory path: ')
   )
 }
+
+# add a function to get function arguments
+# see https://stackoverflow.com/questions/14397364/match-call-with-default-arguments
+match.call.defaults <- function(...) {
+  call <- evalq(match.call(expand.dots = FALSE), parent.frame(1))
+  formals <- evalq(formals(), parent.frame(1))
+
+  for(i in setdiff(names(formals), names(call)))
+    call[i] <- list( formals[[i]] )
+
+
+  match.call(sys.function(sys.parent()), call)
+}

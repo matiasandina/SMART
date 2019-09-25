@@ -5,7 +5,8 @@
 \title{Pull up atlas plate in graphics device.}
 \usage{
 pull_atlas(AP, xpos = 0, x = 0, adj = c(-1, 0), cex = 1.5,
-  width = NULL, save = FALSE, new_device = TRUE)
+  width = NULL, save = FALSE, new_device = TRUE,
+  force_redraw = FALSE)
 }
 \arguments{
 \item{AP}{Anterior-posterior mouse atlas coordinate.}
@@ -21,6 +22,8 @@ adjustment of the labels. On most devices values outside that interval will
 also work. Argument from [text()] function.}
 
 \item{cex}{Character expension factor. Argument from [text()] function.}
+
+\item{force_redraw}{boolean to force pull_atlas to redraw instad of getting the image}
 }
 \description{
 Enter in an AP coordinate from the Allen Mouse Brain Atlas and
