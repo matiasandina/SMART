@@ -64,7 +64,7 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL, filetype=c(".tif
     quartz(width=5)
     par(mfrow = c(3,3),
             oma = c(1,1,0,0) + 0.1,
-            mar = c(0,0,0,0) + 0.1))
+            mar = c(0,0,0,0) + 0.1)
     # call first time and open a new device
     # pull_atlas(first_guess[1], new_device = TRUE)
     # call the rest with no new device
