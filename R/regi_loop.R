@@ -89,10 +89,14 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
 
       # Saving image. Note: the extra window is to correct for a bug in savePlot in windows
       curwin <- dev.cur()
-      quartz(width = width)
-      savePlot(filename = savepath, type = filetype, device = curwin)
-      graphics.off()
-
+      if(get_os() == "osx"){
+        quartz.save(file = savepath, type = filetype, device = curwin)
+        graphics.off()
+      } else {
+        quartz(width = width)
+        savePlot(filename = savepath, type = filetype, device = curwin)
+        graphics.off()
+      }
       # Annotate and save images using magick package
       image  <- magick::image_read(savepath)
       image  <- magick::image_annotate(image, paste0("Plate ", toString(platereturn(AP)),", AP ",
@@ -242,9 +246,14 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
 
       # Saving image. Note: the extra window is to correct for a bug in savePlot in windows
       curwin <- dev.cur()
-      quartz(width=width)
-      savePlot(filename = savepath, type = filetype, device = curwin)
-      graphics.off()
+      if(get_os() == "osx"){
+        quartz.save(file = savepath, type = filetype, device = curwin)
+        graphics.off()
+      } else {
+        quartz(width = width)
+        savePlot(filename = savepath, type = filetype, device = curwin)
+        graphics.off()
+      }
 
       # Annotate and save images using magick package
       image  <- magick::image_read(savepath)
