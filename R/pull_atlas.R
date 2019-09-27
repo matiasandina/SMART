@@ -46,7 +46,6 @@ pull_atlas <- function(AP, xpos = 0, x = 0, adj = c( -1, 0),
     # if exists, load it
     if(file.exists(path_to_try)){
       plot(imager::load.image(path_to_try), axes=FALSE)
-      text(x = x, window_title, adj = adj, cex = cex)
 
     } else {
       # else, call the function again forcing redraw
