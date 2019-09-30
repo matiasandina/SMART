@@ -85,6 +85,7 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL, filetype=c(".tif
       guess_again <- readline("Use numbers to select the option that best fits your image :> ")
       guess_again <- as.numeric(guess_again)
 
+      # TODO: This should prompt you to select again, not brake the whole chain...
       if(guess_again < 1 | guess_again > length(my_options)){
         stop("Error: option is not correct. Start again")
       }
