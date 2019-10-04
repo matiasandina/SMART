@@ -1,10 +1,11 @@
 #' @title Function to plot planes in `ggplot2` environment
-#' @description The idea behind this script is to make something like wholebrain::plot.outlines(regi, TRUE) but in ggplot2
+#' @description The idea behind this script is to make something
+#' like wholebrain::plot.outlines(regi, TRUE) but in ggplot2
 #' @param contour_list comes from `prep_data(regi)` function
 #' @import tidyverse
 
 #' @export
-gg_brain <- function(contour_list, grayscale=TRUE, color=FALSE, fill=FALSE){
+gg_brain <- function(contour_list, grayscale=TRUE, color=FALSE, fill=FALSE) {
 
 
   # bind the contours
@@ -19,32 +20,32 @@ gg_brain <- function(contour_list, grayscale=TRUE, color=FALSE, fill=FALSE){
 
   p1 <-  df %>%
       #  mutate(border_color = rep(regi$atlas$col, 68))%>%
-      ggplot(aes(group=contour.ID, fill=color))+
-      geom_polygon(aes(xrT, yrT), color="black")+
-      geom_polygon(aes(xlT, ylT), color="black")+
+      ggplot(aes(group = contour.ID, fill = color))+
+      geom_polygon(aes(xrT, yrT), color = "black")+
+      geom_polygon(aes(xlT, ylT), color = "black")+
       theme_void()+
-      theme(panel.background = element_rect(fill="gray90"),
-            legend.position="none")+
+      theme(panel.background = element_rect(fill = "gray90"),
+            legend.position = "none")+
       scale_y_reverse()
 
 
   p2 <- df %>%
     #  mutate(border_color = rep(regi$atlas$col, 68))%>%
-      ggplot(aes(group=contour.ID, color=color))+
+      ggplot(aes(group = contour.ID, color=color))+
       geom_polygon(aes(xrT, yrT))+
       geom_polygon(aes(xlT, ylT))+
       theme_void()+
-      theme(panel.background = element_rect(fill="gray90"),
-            legend.position="none")+
+      theme(panel.background = element_rect(fill = "gray90"),
+            legend.position = "none")+
       scale_y_reverse()
 
   p3 <- df %>%
-    ggplot(aes(group=contour.ID))+
-    geom_path(aes(xrT, yrT),  color="black")+
-    geom_path(aes(xlT, ylT), color="black")+
+    ggplot(aes(group = contour.ID))+
+    geom_path(aes(xrT, yrT),  color = "black")+
+    geom_path(aes(xlT, ylT), color = "black")+
     theme_void()+
     theme(panel.background = element_rect(fill="gray90"),
-          legend.position="none")+
+          legend.position = "none")+
     scale_y_reverse()
 
 
@@ -72,12 +73,6 @@ gg_brain <- function(contour_list, grayscale=TRUE, color=FALSE, fill=FALSE){
       #                   x = Inf, y = -Inf, hjust=1, vjust=0,
       #                   inherit.aes = FALSE) +
         NULL)
-
     }
   }
-
 }
-
-
-
-
