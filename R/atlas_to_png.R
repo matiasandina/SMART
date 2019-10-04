@@ -4,10 +4,10 @@
 
 atlas_to_png <- function(){
   # load atlas
-  load(file.path(.libPaths()[1],"wholebrain","data","atlasIndex.RData"))
+  load(file.path(.libPaths()[1], "wholebrain", "data", "atlasIndex.RData"))
 
 
-  sections <- dplyr::filter(atlasIndex, plane=="coronal")
+  sections <- dplyr::filter(atlasIndex, plane == "coronal")
   sections <- dplyr::pull(sections, mm.from.bregma)
 
   # sections from -5.58 cannot be shown now
@@ -19,7 +19,7 @@ atlas_to_png <- function(){
   for(i in sections){
     print(i)
     ind_file <- paste0("AP_level_", round(i, 2), ".png")
-    savepath <- file.path(getwd(), "data", ind_file )
+    savepath <- file.path(getwd(), "data", ind_file)
 
     tryCatch(
       expr = {
