@@ -3,17 +3,17 @@
 #' @param match_df dataframe with image_paths and assigned APs (output of `match_image_to_atlas`)
 
 #' @export
-inspect_AP_match <- function(match_df){
+inspect_AP_match <- function(match_df) {
 
   li <- list()
   n_row <- nrow(match_df)
 
-  for(i in 1:n_row){
-    if(i==1){
+  for (i in 1:n_row) {
+    if(i == 1){
       # first device
-      quartz(width=10)
+      quartz(width = 10)
       # second device
-      quartz(width=10)
+      quartz(width = 10)
     }
     # set current device to previous device
     dev.set(dev.prev())
@@ -25,9 +25,9 @@ inspect_AP_match <- function(match_df){
     dev.set(dev.next())
     plot(img, axes = FALSE)
 
-    correct <- readline(prompt="Was the match correct [enter] or incorrect [any other key]? :>")
+    correct <- readline(prompt = "Was the match correct [enter] or incorrect [any other key]? :>")
 
-    if(correct == ""){
+    if(correct == "") {
       # save the value in li
       li[[i]] <- "correct"
     } else {
@@ -36,7 +36,7 @@ inspect_AP_match <- function(match_df){
 
   }
 
-  if(any(li == "incorrect")){
+  if (any(li == "incorrect")) {
     # should give us indices
     images_to_match <- which(li == "incorrect")
     # prompt the user
@@ -54,7 +54,7 @@ inspect_AP_match <- function(match_df){
     match_df[images_to_match, ] <- fixed_images
 
     # we can check dimensions for extra piece of mind
-    if(n_row != nrow(match_df)){
+    if (n_row != nrow(match_df)) {
       stop("There has been a problem with the number of rows. Check code")
     }
 
