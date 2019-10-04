@@ -1,5 +1,3 @@
-
-
 #' @title Generate a brain morph plot **(W)**
 #' @description Generate a brain morph plot (normalized to 1). For use with mapping whole brain only.
 #' Creates a plot that can be easily modified using 'par()' to query or set graphical parameters
@@ -43,7 +41,7 @@ brainmorph <- function(setup, saveplot = TRUE,
 
   # plot brainmorph with ggplot2
   # Total
-  AP_coor <- seq(from = 3.0, to = -5.0 , by = by)
+  AP_coor <- seq(from = 3.0, to = -5.0, by = by)
   exp_ratio <- my_function2(AP_coor)
   morph_data <- data.frame(AP_coor, exp_ratio)
 
@@ -55,8 +53,8 @@ brainmorph <- function(setup, saveplot = TRUE,
   options(warn=-1)
   g <- ggplot(data = morph_data,  aes(x = AP_coor, y = exp_ratio)) +
     theme_bw() +
-    scale_x_continuous(breaks =  seq(from = -5.0, to = 3.0 , by = 1.0),
-                       labels =  unlist(strsplit(toString(seq(from = -5.0, to = 3.0 , by = 1.0)), ",")),
+    scale_x_continuous(breaks =  seq(from = -5.0, to = 3.0, by = 1.0),
+                       labels =  unlist(strsplit(toString(seq(from = -5.0, to = 3.0, by = 1.0)), ",")),
                        trans = "reverse") +
     scale_y_continuous(breaks = seq(from = y_lim[1], to = y_lim[2], by = y_by), limits = y_lim) +
     theme(axis.line = element_line(colour = "black")) +
@@ -77,10 +75,12 @@ brainmorph <- function(setup, saveplot = TRUE,
   # Saving plot
   if (saveplot) {
     filetype <- match.arg(filetype)
-    savepath <- file.path(setup$savepaths$out_RC_brain_morph, paste0("Animal_", setup[[1]], "_brain_morph_", setup[[2]],".", filetype))
-    savePlot( filename = savepath, type = filetype)
+    savepath <- file.path(setup$savepaths$out_RC_brain_morph,
+                          paste0("Animal_", setup[[1]],
+                                 "_brain_morph_", setup[[2]], ".", filetype))
+    savePlot(filename = savepath, type = filetype)
     dev.off()
   }
   detach(package:ggplot2)
-  options(warn=0)
+  options(warn = 0)
 }

@@ -35,7 +35,8 @@
 choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
                    xpos = c(200, 760, 1350), brightness = 70,
                    font_col = "white", font_size = 80, font_location = "+100+30",
-                   gravity = "southwest", choice_step = c(200,100,30,10), atlas = TRUE, at_pos = 0) {
+                   gravity = "southwest", choice_step = c(200, 100, 30, 10),
+                   atlas = TRUE, at_pos = 0) {
 
   # Interpolate z numbers base on first and last aligned images
   fl_AP       <- roundAP(c(setup$first_AP, setup$last_AP))
@@ -62,7 +63,7 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
     cat("Please the check the estimated midpoints.,",
         "\nIf you do not like them, midpoints will be used as another reference point.")
 
-    for (n in 1:length(midpnt_ref_z) ) {
+    for (n in 1:length(midpnt_ref_z)) {
 
       if (atlas){
         pull_atlas(midpnt_ref_AP[n], xpos = at_pos)
@@ -73,7 +74,7 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
       ref_im  <- magick::image_normalize(ref_im)
       ref_im  <- magick::image_modulate(ref_im, brightness = brightness)
       ref_im  <- magick::image_contrast(ref_im)
-      ref_im  <- magick::image_annotate(ref_im, paste0("Plate ", toString(platereturn(midpnt_ref_AP[n])),", AP ",
+      ref_im  <- magick::image_annotate(ref_im, paste0("Plate ", toString(platereturn(midpnt_ref_AP[n])), ", AP ",
                                                        toString(round(midpnt_ref_AP[n], digits=2)), ", est. z ",
                                                        toString(midpnt_ref_z[n])), gravity = gravity, size= font_size,
                                         color = font_col, location = font_location)
@@ -175,7 +176,7 @@ choice <- function(setup, touchup = NA, midpoint = FALSE, filetype = c("tif"),
         }
 
 
-        if( inp =='1'){
+        if(inp == '1'){
           ref_num <- ref_num - choice_step[stpcnt]
         } else if (inp =='2') {
           stpcnt <- stpcnt + 1    # 'zoom' in and change to a different choice_step count
