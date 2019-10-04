@@ -10,7 +10,7 @@
 #' @md
 #' @export
 
-get_savepaths <- function (setup) {
+get_savepaths <- function(setup) {
 
   # TODO: should you tell the user that you are creating all those directories?
 

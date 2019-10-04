@@ -1,5 +1,6 @@
 #' @title Function to plot planes in `ggplot2` environment
-#' @description This function will make a table with the information we need to provide to the cropping function
+#' @description This function will make a table with the information
+#'  we need to provide to the cropping function
 #' @param regi object from any `registration` function(s)
 #' @param ordered_filtered_list a list of the filters feed to
 #'  the regi object in the same order (check names(ordered_filtered_list) matches the regi[[i]])
@@ -7,11 +8,11 @@
 
 #' @export
 #
-prep_data <- function(regi, ordered_filter_list){
+prep_data <- function(regi, ordered_filter_list) {
 
   num_regis <- length(regi)
 
-  if(num_regis == 0){stop("must provide regi object with length >= 1")}
+  if (num_regis == 0){ stop("must provide regi object with length >= 1")}
 
   # check lengths
   if(length(ordered_filter_list) >1 ){

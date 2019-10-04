@@ -2,17 +2,17 @@
 #' @description Asks user for folder where images are stored.
 #'   It prompts user to align images to better suited plate on atlas.
 #' @param img_folder path of folder where images are stored
-#' @param ind_img individual image in case this function needs to be called on one image. Save not possible in this case.
+#' @param ind_img individual image in case this function needs to be called on one image.
+#'  Save not possible in this case.
 #' @param filetype type of the files, pattern fed to `list.files(...)`
 
-# TODO: Change name of the function to something more proper
-
 #' @export
-match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL, filetype=c(".tif")){
+match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
+                                 filetype=c(".tif")) {
 
   # load atlasIndex
-  if(!exists("atlasIndex", envir = .GlobalEnv)){
-  load(file.path(.libPaths()[1],"wholebrain","data","atlasIndex.RData"))
+  if (!exists("atlasIndex", envir = .GlobalEnv)) {
+  load(file.path(.libPaths()[1], "wholebrain", "data", "atlasIndex.RData"))
   }
 
   # throw error if both the img_folder and ind_img are null
@@ -61,10 +61,10 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL, filetype=c(".tif
     # generate options around the guess (overwrites guess)
     first_guess <- generate_AP_options(first_guess, resolution=0.2)
 
-    quartz(width=5)
-    par(mfrow = c(3,3),
-            oma = c(1,1,0,0) + 0.1,
-            mar = c(0,0,0,0) + 0.1)
+    quartz(width = 5)
+    par(mfrow = c(3, 3),
+            oma = c(1, 1, 0, 0) + 0.1,
+            mar = c(0, 0, 0, 0) + 0.1)
     # call first time and open a new device
     # pull_atlas(first_guess[1], new_device = TRUE)
     # call the rest with no new device
@@ -80,7 +80,7 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL, filetype=c(".tif
       message("+++++++++++++++++++++++++")
 
       my_options <- roundAP(first_guess)
-      message(paste0("Option ", 1:length(my_options), ") ", round(my_options, 2), "\n"))
+      message(paste0("Option ", seq_len(my_options), ") ", round(my_options, 2), "\n"))
 
       guess_again <- readline("Use numbers to select the option that best fits your image :> ")
       guess_again <- as.numeric(guess_again)
@@ -122,18 +122,18 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL, filetype=c(".tif
 
       # Display red box for selection :D
       par(mfg = c(nr = row, nc = column))
-      box(lty = '1373', col = 'red', lwd=6)
+      box(lty = "1373", col = "red", lwd = 6)
 
       done_str <- readline("Are you done? (Y/N) :> ")
 
       # get the mfg to the end
-      par(mfg = c(nr = 3, nc =3))
+      par(mfg = c(nr = 3, nc = 3))
       # plot empty plot
       # This is to prevent overplotting on the next iteration
-      plot(0,type='n',axes=FALSE,ann=FALSE)
+      plot(0, type = 'n', axes = FALSE, ann = FALSE)
 
 
-      if(tolower(done_str) == "y"){
+      if (tolower(done_str) == "y") {
         # assign to df the new value
         df[which(df$image_file == image), "mm.from.bregma"] <- second_guess
         # Do the saving accordingly
@@ -177,9 +177,3 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL, filetype=c(".tif
   par(mfrow=c(1, 1))
   return(df)
   }
-
-
-
-
-
-

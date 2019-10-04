@@ -52,7 +52,7 @@ get_count <- function(dataset, roi = c('MO', 'TH')){
 
 #' @export
 # Recursive function to get all child regions of entered regions of interest
-get_all_children <- function (rois, children = c()) {
+get_all_children <- function(rois, children = c()) {
   for (l in 1:length(rois)){
     # Get child regions
     new_children <- wholebrain::get.acronym.child(rois[l])
@@ -128,8 +128,8 @@ generate_AP_options <- function(AP, resolution){
 # First a helper function to load packages, installing them first if necessary
 # Returns logical value for whether successful
 #' @export
-ensure_library = function (lib.name){
-  x = lib.name %in% installed.packages()
+ensure_library <- function(lib.name){
+  x <- lib.name %in% installed.packages()
   #if (!x) {
   #  install.packages(lib.name, dependencies = TRUE, quiet = TRUE)
   #  x = require(lib.name, quietly = TRUE, character.only = TRUE)
@@ -139,7 +139,7 @@ ensure_library = function (lib.name){
 
 
 #' @export
-select_directory_method = function() {
+select_directory_method <- function() {
   # Tries out a sequence of potential methods for selecting a directory to find one that works
   # The fallback default method if nothing else works is to get user input from the console
   if (!exists('.dir.method')){  # if we already established the best method, just use that

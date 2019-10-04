@@ -86,7 +86,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
             ## User wants to add correspondance pts ##
             pts <- FALSE
             while (!is.integer(pts)) {
-              pts <- readline ("How many points?  ")
+              pts <- readline("How many points?  ")
               pts <- suppressWarnings(as.integer(pts))               # Convert input from string into integer
 
               if(is.na(pts)){                                        # Adjusts for input that isn't numerical
@@ -114,7 +114,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
             ## User wants to change correspondance pts ##
             val <- TRUE
             while (val) {
-              pts <- readline ("Which points do you want to change? ")
+              pts <- readline("Which points do you want to change? ")
               pts <- unlist(strsplit(pts,","))
               pts_col  <- grep(":", pts, value=TRUE)                # points with colon
               pts_sing <- grep(":", pts, value=TRUE, invert=TRUE)   # points without colon in string
@@ -168,7 +168,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
             ## User wants to remove correspondance pts ##
             val <- TRUE
             while (val) {
-              pts <- readline ("Which points do you want to change? ")
+              pts <- readline("Which points do you want to change? ")
               pts <- unlist(strsplit(pts,","))
               pts_col  <- grep(":", pts, value=TRUE)                # points with colon
               pts_sing <- grep(":", pts, value=TRUE, invert=TRUE)   # points without colon in string
