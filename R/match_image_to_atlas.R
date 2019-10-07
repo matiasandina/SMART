@@ -54,12 +54,19 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
     quartz(width = 10, title = paste("Equalized", window_title))
 
     # equalized histogram
-    plot(hist.eq(img), axes=FALSE)
+    plot(hist.eq(img), axes = FALSE)
 
-    first_guess <- as.numeric(readline("what is your first guess for AP level? :> "))
+    first_guess <- readline("what is your first guess for AP level? :> ")
+
+    while (is.na(as.numeric(first_guess))) {
+      message("Your input is not valid, please enter a number.")
+      guess_again <- readline("what is your first guess for AP level? :> ")
+    }
+
+    first_guess <- as.numeric(first_guess)
 
     # generate options around the guess (overwrites guess)
-    first_guess <- generate_AP_options(first_guess, resolution=0.2)
+    first_guess <- generate_AP_options(first_guess, resolution = 0.2)
 
     quartz(width = 5)
     par(mfrow = c(3, 3),
@@ -74,7 +81,7 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
 
 
     done <- FALSE
-    while(!done){
+    while (!done) {
       message("+++++++++++++++++++++++++")
       message("Please see your options below:")
       message("+++++++++++++++++++++++++")
@@ -83,13 +90,29 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
       message(paste0("Option ", seq_len(my_options), ") ", round(my_options, 2), "\n"))
 
       guess_again <- readline("Use numbers to select the option that best fits your image :> ")
-      guess_again <- as.numeric(guess_again)
-
-      # TODO: This should prompt you to select again, not brake the whole chain...
-      if(guess_again < 1 | guess_again > length(my_options)){
-        stop("Error: option is not correct. Start again")
+      # We check whether as.numeric will return NA
+      # if we don't do this correctly, it will crash the program
+      while (is.na(as.numeric(guess_again))) {
+        message("Your input is not valid, please enter a number.")
+        guess_again <- readline("Use numbers to select the option that best fits your image :> ")
       }
 
+      # Now we convert for real
+      guess_again <- as.numeric(guess_again)
+
+      # if your numeric option is less than 1 or greater than the list
+      # ask again
+      while (guess_again < 1 | guess_again > length(my_options)) {
+        message("Option is not valid. Choose again")
+        guess_again <- readline("Use numbers to select the option that best fits your image :> ")
+        while (is.na(as.numeric(guess_again))) {
+          message("Option is not valid. Choose again")
+          guess_again <- readline("Use numbers to select the option that best fits your image :> ")
+          # Convert to number
+          guess_again <- as.numeric(guess_again)
+        }
+      }
+      # Subset the options on that number
       second_guess <- my_options[guess_again]
       # overwrite first guess & generate new values
       first_guess <- generate_AP_options(second_guess, 0.1)
@@ -110,7 +133,7 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
       # if things work as expected, it should always be position 5
       # c(2,2) on the grid
 
-      vec <-rep(0, 9)
+      vec <- rep(0, 9)
       vec[selected_panel] <- 1
 
       # split into rows of 3
@@ -138,11 +161,12 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
         df[which(df$image_file == image), "mm.from.bregma"] <- second_guess
         # Do the saving accordingly
         enter_saving <- TRUE
-        while(enter_saving){
+        while (enter_saving) {
           save_progress <- readline("Do you want to save (Y/N)? :> ")
-            if(tolower(save_progress)=="y"){
-              if(is.null(ind_img)){
-                saveRDS(df, file=file.path(dirname(img_folder), "atlas_img_path_df"))
+            if (tolower(save_progress) == "y") {
+              if (is.null(ind_img)) {
+                saveRDS(df, file = file.path(dirname(img_folder),
+                                             "atlas_img_path_df"))
                 message("Progress was saved, moving on :)")
                 enter_saving <- FALSE
               } else {
@@ -150,7 +174,7 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
                  enter_saving <- FALSE
                 }
           }
-            else if(tolower(save_progress)=="n"){
+            else if (tolower(save_progress) == "n") {
             message("Progress was not saved!")
             enter_saving <- FALSE
           }
@@ -174,6 +198,6 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
   }
 
   # return par
-  par(mfrow=c(1, 1))
+  par(mfrow = c(1, 1))
   return(df)
   }
