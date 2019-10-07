@@ -87,7 +87,7 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
       message("+++++++++++++++++++++++++")
 
       my_options <- roundAP(first_guess)
-      message(paste0("Option ", seq_len(my_options), ") ", round(my_options, 2), "\n"))
+      message(paste0("Option ", seq_len(length(my_options)), ") ", round(my_options, 2), "\n"))
 
       guess_again <- readline("Use numbers to select the option that best fits your image :> ")
       # We check whether as.numeric will return NA
