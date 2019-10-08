@@ -35,7 +35,7 @@ inspect_wrong_regi_plates <- function(setup) {
   for (i in 1:n_row) {
     if (i == 1) {
       # first device
-      quartz(width = 20, xpos = 200, ypos = 200)
+      quartz(width = 20)
     }
     # load the image
     img <- imager::load.image(images_to_inspect[i])
