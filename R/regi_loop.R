@@ -70,7 +70,7 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
 
       # Get image number and AP number
       imnum <- setup$regi_z[s]
-      AP <- setup$regi_AP[s]
+      AP <- roundAP(setup$regi_AP[s])
 
       # Register image
       quartz(width, height)
