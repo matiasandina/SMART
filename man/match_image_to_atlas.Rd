@@ -10,7 +10,8 @@ match_image_to_atlas(img_folder = NULL, ind_img = NULL,
 \arguments{
 \item{img_folder}{path of folder where images are stored}
 
-\item{ind_img}{individual image in case this function needs to be called on one image. Save not possible in this case.}
+\item{ind_img}{individual image in case this function needs to be called on one image.
+Save not possible in this case.}
 
 \item{filetype}{type of the files, pattern fed to `list.files(...)`}
 }

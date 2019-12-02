@@ -13,5 +13,6 @@ prep_data(regi, ordered_filter_list)
 the regi object in the same order (check names(ordered_filtered_list) matches the regi[[i]])}
 }
 \description{
-This function will make a table with the information we need to provide to the cropping function
+This function will make a table with the information
+ we need to provide to the cropping function
 }

@@ -10,5 +10,6 @@ gg_brain(contour_list, grayscale = TRUE, color = FALSE, fill = FALSE)
 \item{contour_list}{comes from `prep_data(regi)` function}
 }
 \description{
-The idea behind this script is to make something like wholebrain::plot.outlines(regi, TRUE) but in ggplot2
+The idea behind this script is to make something
+like wholebrain::plot.outlines(regi, TRUE) but in ggplot2
 }
