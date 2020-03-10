@@ -121,65 +121,6 @@ generate_AP_options <- function(AP, resolution){
   return(values)
 }
 
-#' This functions allow the user to choose a directory interactively
-#' it is supposed to be cross-platform
-#' comes from https://stackoverflow.com/questions/48218491/os-independent-way-to-select-directory-interactively-in-r
-
-# First a helper function to load packages, installing them first if necessary
-# Returns logical value for whether successful
-#' @export
-ensure_library <- function(lib.name){
-  x <- lib.name %in% installed.packages()
-  #if (!x) {
-  #  install.packages(lib.name, dependencies = TRUE, quiet = TRUE)
-  #  x = require(lib.name, quietly = TRUE, character.only = TRUE)
-  #}
-  return(x)
-}
-
-
-#' @export
-select_directory_method <- function() {
-  # Tries out a sequence of potential methods for selecting a directory to find one that works
-  # The fallback default method if nothing else works is to get user input from the console
-  if (!exists('.dir.method')){  # if we already established the best method, just use that
-    # otherwise lets try out some options to find the best one that works here
-    if (exists('utils::choose.dir')) {
-      .dir.method = 'choose.dir'
-    } else if (rstudioapi::isAvailable() & rstudioapi::getVersion() > '1.1.287') {
-      .dir.method = 'RStudioAPI'
-      ensure_library('rstudioapi')
-    } else if(ensure_library('tcltk') &
-              class(try({tt  <- tktoplevel(); tkdestroy(tt)}, silent = TRUE)) != "try-error") {
-      .dir.method = 'tcltk'
-    } else if (ensure_library('gWidgets2') & ensure_library('RGtk2')) {
-      .dir.method = 'gWidgets2RGtk2'
-    } else if (ensure_library('rJava') & ensure_library('rChoiceDialogs')) {
-      .dir.method = 'rChoiceDialogs'
-    } else {
-      .dir.method = 'console'
-    }
-    assign('.dir.method', .dir.method, envir = .GlobalEnv) # remember the chosen method for later
-  }
-  return(.dir.method)
-}
-
-
-
-#' @export
-choose_directory <- function(ini_dir = getwd(),
-                             method = select_directory_method(),
-                             title = 'Select data directory') {
-
-  switch(method,
-         'choose.dir' = choose.dir(default = ini_dir, caption = title),
-         'RStudioAPI' = rstudioapi::selectDirectory(path = ini_dir, caption = title),
-         'tcltk' = tcltk::tk_choose.dir(default = ini_dir, caption = title),
-         'rChoiceDialogs' = rChoiceDialogs::rchoose.dir(default = ini_dir, caption = title),
-         'gWidgets2RGtk2' = gfile(type = 'selectdir', text = title, initial.dir = ini_dir),
-         readline('Please enter directory path: ')
-  )
-}
 
 # add a function to get function arguments
 # see https://stackoverflow.com/questions/14397364/match-call-with-default-arguments
