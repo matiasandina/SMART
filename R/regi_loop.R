@@ -200,7 +200,7 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
           "__________________________________________________________________________\n")
 
       imnum   <- loop_z[s]
-      AP      <- loop_AP[s]
+      AP      <- roundAP(loop_AP[s])
       im_path <- setup$image_paths$regi_paths[imnum]
       index   <- which(imnum==setup$regi_z)
 
