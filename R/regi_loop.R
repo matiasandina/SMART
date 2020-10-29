@@ -33,6 +33,7 @@
 #' @param gravity (optional, "southwest") Location of text annotation. e.g. "southwest" means bottom left of screen.
 #' @param width (default = 18) Registration plotting window width in inches.
 #' @param height (default = 10.2 ) Registration plotting window height in inches.
+#' @param resize (default =  (1/8)/4)) Registration resize parameter. Default is same as in `wholebrain::registration()`.
 #' @details This functions creates a vector list of registration information for each registration slice.
 #' Note: This is not a return. The vector *regis* is automatically created.
 #' @md
@@ -41,7 +42,8 @@
 regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", closewindow = TRUE,
                                  filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp","ps", "eps", "pdf"),
                                  autoloop = FALSE, touchup = FALSE, reference = FALSE, popup = TRUE, brightness = 70, font_col = "white",
-                                 font_size = 40, font_location = "+100+100", gravity = "southwest", width = 18, height = 10.2) {
+                                 font_size = 40, font_location = "+100+100", gravity = "southwest", width = 18, height = 10.2,
+                                 resize = (1/8)/4) {
 
   # Match filetype argument
   filetype <- match.arg(filetype)
@@ -66,21 +68,23 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
     tictoc::tic()
     # Run autoloop if you want to automatically run first pass registration.
     # Output images will be saved in folder structure setup$savepaths$out_auto_registration.
-    for (s in 1:length(setup$regi_z)){
+    for (section in 1:length(setup$regi_z)){
 
       # Get image number and AP number
-      imnum <- setup$regi_z[s]
-      AP <- roundAP(setup$regi_AP[s])
+      imnum <- setup$regi_z[section]
+      AP <- roundAP(setup$regi_AP[section])
 
       # Register image
       quartz(width, height)
-      #regis[[s]] <<- wholebrain::registration(setup$image_paths$regi_paths[imnum], AP,
-      #                                        plane = plane, filter = filter[[s]], display = TRUE,
-      #                                        output.folder = setup$savepaths$out_registration_warps)
+      #regis[[section]] <<- wholebrain::registration(setup$image_paths$regi_paths[imnum], AP,
+      #                                        plane = plane, filter = filter[[section]], display = TRUE,
+      #                                        output.folder = setup$savepaths$out_registration_warps,
+      #                                        resize=resize)
 
-      regis[[s]] <<- registration_MLA(setup$image_paths$regi_paths[imnum], AP,
-                                              plane = plane, filter = filter[[s]], display = TRUE,
-                                              output.folder = setup$savepaths$out_registration_warps)
+      regis[[section]] <<- registration_MLA(setup$image_paths$regi_paths[imnum], AP,
+                                              plane = plane, filter = filter[[section]], display = TRUE,
+                                              output.folder = setup$savepaths$out_registration_warps,
+                                            resize = resize)
 
       ## save, annotate, then resave the registration image using magick.
       savepath <- paste0(setup$savepaths$out_auto_registration, "/registration_z_", toString(imnum),
@@ -194,13 +198,13 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
     }
 
     #### Loop through slices
-    for (s in 1:length(loop_z)){
+    for (section in 1:length(loop_z)){
       cat(" __________________________________________________________________________\n",
           "                 You are starting a new registration!               \n",
           "__________________________________________________________________________\n")
 
-      imnum   <- loop_z[s]
-      AP      <- roundAP(loop_AP[s])
+      imnum   <- loop_z[section]
+      AP      <- roundAP(loop_AP[section])
       im_path <- setup$image_paths$regi_paths[imnum]
       index   <- which(imnum==setup$regi_z)
 
@@ -220,23 +224,24 @@ regi_loop <- function(setup, filter = NULL, regis = NULL, plane = "coronal", clo
 
         quartz(width, height)    # dummy window
         # Run registration improvement loop
-        regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter[[s]],
+        regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter[[section]],
                                          correspondance = regis[[index]], plane = plane,
                                          closewindow = closewindow,
                                          output.folder = setup$savepaths$out_registration_warps,
-                                         width = width, height = height)
+                                         width = width, height = height, resize = resize)
       } else {
         # Run registration loop without popup window
         # window
         quartz(width, height)
 
         # Run registration improvement loop
-        regis[[index]] <<-list(NULL) # Clear memory space
-        regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter[[s]],
+        regis[[index]] <<- list(NULL) # Clear memory space
+        regis[[index]] <<- registration2(im_path, coordinate = AP, filter = filter[[section]],
                                          correspondance = regis[[index]], plane = plane,
                                          closewindow = closewindow,
                                          output.folder = setup$savepaths$out_registration_warps,
-                                         width = width, height = height)
+                                         width = width, height = height,
+                                         resize= resize)
       }
 
       ## save, annotate, then resave the registration image using magick.

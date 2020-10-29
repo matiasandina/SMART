@@ -4,8 +4,7 @@
 \alias{match_image_to_atlas}
 \title{User friendly way to put images into order with atlas}
 \usage{
-match_image_to_atlas(img_folder = NULL, ind_img = NULL,
-  filetype = c(".tif"))
+match_image_to_atlas(img_folder = NULL, ind_img = NULL, filetype = c(".tif"))
 }
 \arguments{
 \item{img_folder}{path of folder where images are stored}

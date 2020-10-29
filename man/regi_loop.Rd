@@ -4,13 +4,27 @@
 \alias{regi_loop}
 \title{Automatically loops through the image registration process}
 \usage{
-regi_loop(setup, filter = NULL, regis = NULL, plane = "coronal",
-  closewindow = TRUE, filetype = c("tif", "tiff", "wmf", "emf", "png",
-  "jpg", "jpeg", "bmp", "ps", "eps", "pdf"), autoloop = FALSE,
-  touchup = FALSE, reference = FALSE, popup = TRUE,
-  brightness = 70, font_col = "white", font_size = 40,
-  font_location = "+100+100", gravity = "southwest", width = 18,
-  height = 10.2)
+regi_loop(
+  setup,
+  filter = NULL,
+  regis = NULL,
+  plane = "coronal",
+  closewindow = TRUE,
+  filetype = c("tif", "tiff", "wmf", "emf", "png", "jpg", "jpeg", "bmp", "ps", "eps",
+    "pdf"),
+  autoloop = FALSE,
+  touchup = FALSE,
+  reference = FALSE,
+  popup = TRUE,
+  brightness = 70,
+  font_col = "white",
+  font_size = 40,
+  font_location = "+100+100",
+  gravity = "southwest",
+  width = 18,
+  height = 10.2,
+  resize = (1/8)/4
+)
 }
 \arguments{
 \item{setup}{(required) Setup list from \code{\link[=setup_pl]{setup_pl()}}.}
@@ -59,6 +73,8 @@ This can help with internal structure visualization.}
 \item{width}{(default = 18) Registration plotting window width in inches.}
 
 \item{height}{(default = 10.2 ) Registration plotting window height in inches.}
+
+\item{resize}{(default =  (1/8)/4)) Registration resize parameter. Default is same as in \code{wholebrain::registration()}.}
 }
 \description{
 User friendly code to alter atlas to image registration.

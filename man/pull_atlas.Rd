@@ -4,9 +4,17 @@
 \alias{pull_atlas}
 \title{Pull up atlas plate in graphics device.}
 \usage{
-pull_atlas(AP, xpos = 0, x = 0, adj = c(-1, 0), cex = 1.5,
-  width = NULL, save = FALSE, new_device = TRUE,
-  force_redraw = FALSE)
+pull_atlas(
+  AP,
+  xpos = 0,
+  x = 0,
+  adj = c(-1, 0),
+  cex = 1.5,
+  width = NULL,
+  save = FALSE,
+  new_device = TRUE,
+  force_redraw = FALSE
+)
 }
 \arguments{
 \item{AP}{Anterior-posterior mouse atlas coordinate.}
