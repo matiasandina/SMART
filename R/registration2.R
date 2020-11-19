@@ -38,7 +38,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
                             output.folder = "../", batch.mode = FALSE, channel = 0,
                             verbose = TRUE, closewindow = TRUE, width = 18, height = 10.2) {
 
-  regi <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
+  regi <- registration_MLA(input, coordinate = coordinate, plane = plane,
                        right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
                        brain.threshold = brain.threshold, blurring = blurring,
                        pixel.resolution = pixel.resolution, resize = resize, correspondance = correspondance,
@@ -68,7 +68,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
           # If user doesn't like recent changes, revert to previous registration file
           cat("This is your previous registration.\n\n")
           quartz(width, height)
-          regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
+          regi_new <- registration_MLA(input, coordinate = coordinate, plane = plane,
                                                right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
                                                brain.threshold = brain.threshold, blurring = blurring,
                                                pixel.resolution = pixel.resolution, resize = resize, correspondance = regi,
@@ -102,7 +102,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
               dev.off()
             }
             quartz(width, height)
-            regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
+            regi_new <- registration_MLA(input, coordinate = coordinate, plane = plane,
                                                  right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
                                                  brain.threshold = brain.threshold, blurring = blurring,
                                                  pixel.resolution = pixel.resolution, resize = resize, correspondance = regi_new,
@@ -154,7 +154,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
             }
 
             quartz(width, height)
-            regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
+            regi_new <- registration_MLA(input, coordinate = coordinate, plane = plane,
                                                  right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
                                                  brain.threshold = brain.threshold, blurring = blurring,
                                                  pixel.resolution = pixel.resolution, resize = resize, correspondance = regi_new,
@@ -207,7 +207,7 @@ registration2 <- function(input, coordinate = NULL, plane = "coronal",
               dev.off()
             }
             quartz(width, height)
-            regi_new <- wholebrain::registration(input, coordinate = coordinate, plane = plane,
+            regi_new <- registration_MLA(input, coordinate = coordinate, plane = plane,
                                                  right.hemisphere = right.hemisphere, interpolation = interpolation, intrp.param = intrp.param,
                                                  brain.threshold = brain.threshold, blurring = blurring,
                                                  pixel.resolution = pixel.resolution, resize = resize, correspondance = regi_new,
