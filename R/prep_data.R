@@ -40,10 +40,12 @@ prep_data <- function(regi, ordered_filter_list) {
     li <- lapply(1:regi[[i]]$atlas$numRegions,
                  function(qq){
                    # hotfix because plate 102 has different length of regions and colors
-                   ntimes <- length(regi[[i]]$atlas$col[[qq]]) - regi[[i]]$atlas$numRegions
-                   if (ntimes < 0) {
+                   # mind, only one square bracket!
+                   no_color <- is.na(regi[[i]]$atlas$col[qq])
 
-                     new_color <- c(regi[[i]]$atlas$col[[qq]], rep("#cccccc", abs(ntimes)))
+                     if (no_color) {
+
+                     new_color <- "#cccccc"
                    } else {
                      new_color <- regi[[i]]$atlas$col[[qq]]
                    }
