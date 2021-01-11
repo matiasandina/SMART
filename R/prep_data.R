@@ -39,6 +39,15 @@ prep_data <- function(regi, ordered_filter_list) {
     # subset the parts that we care about
     li <- lapply(1:regi[[i]]$atlas$numRegions,
                  function(qq){
+                   # hotfix because plate 102 has different length of regions and colors
+                   ntimes <- length(regi[[i]]$atlas$col[[qq]]) - regi[[i]]$atlas$numRegions
+                   if (ntimes < 0) {
+
+                     new_color <- c(regi[[i]]$atlas$col[[qq]], rep("#cccccc", abs(ntimes)))
+                   } else {
+                     new_color <- regi[[i]]$atlas$col[[qq]]
+                   }
+
                    data.frame(
                      # right transformed
                      xrT = regi[[i]]$atlas$outlines[[qq]]$xrT,
@@ -46,7 +55,7 @@ prep_data <- function(regi, ordered_filter_list) {
                      # left transformed
                      xlT = regi[[i]]$atlas$outlines[[qq]]$xlT,
                      ylT = regi[[i]]$atlas$outlines[[qq]]$ylT,
-                     color = regi[[i]]$atlas$col[[qq]],
+                     color = new_color,
                      # From wholebrain::plot.outlines
                      scale_factor = regi[[i]]$transformationgrid$width/dim(regi[[i]]$transformationgrid$mx)[2],
                      # TODO:
