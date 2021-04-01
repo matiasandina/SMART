@@ -46,15 +46,17 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
     window_title <- basename(image)
     quartz(width = 10, title=window_title)
     # img <- magick::image_read() # this way needs a lot of rescaling no?
-    img <- imager::load.image(image)
-
-    plot(img, axes=FALSE)
+    # imager package will be slow compared to Rvision
+    #img <- imager::load.image(image)
+    # plot(img, axes=FALSE)
+    img <- Rvision::image(image)
+    Rvision::display(img)
 
     # let's do a bit of enhancement of the channel
     quartz(width = 10, title = paste("Equalized", window_title))
 
     # equalized histogram
-    plot(hist.eq(img), axes = FALSE)
+    plot(eq_hist(img, channel=2), axes = FALSE)
 
     first_guess <- readline("what is your first guess for AP level? :> ")
 
