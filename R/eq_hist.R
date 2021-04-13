@@ -30,6 +30,6 @@ eq_hist <- function(image, channel){
     }
   }
 
-  enhanced <- Rvision::LUT(balloon, lut)
+  enhanced <- Rvision::LUT(image, lut)
   return(enhanced)
 }
