@@ -44,19 +44,28 @@ match_image_to_atlas <- function(img_folder=NULL, ind_img=NULL,
     # show first image
     # TODO: fix the width issue
     window_title <- basename(image)
-    quartz(width = 10, title=window_title)
-    # img <- magick::image_read() # this way needs a lot of rescaling no?
+    #quartz(width = 10, title=window_title)
     # imager package will be slow compared to Rvision
     #img <- imager::load.image(image)
     # plot(img, axes=FALSE)
     img <- Rvision::image(image)
-    Rvision::display(img, window_name = "original")
+
+    if(Rvision::bitdepth(img) != "8U") {
+   	    # Check if the image is "8U" and convert if needed
+	    img <- img %>%
+	      Rvision::divide(e2=as.numeric(max(img))) %>%
+	      Rvision::multiply(e2=255) %>%
+	      Rvision::changeBitDepth(bitdepth = "8U") 
+    }
+
+
+    Rvision::display(img, window_name = "original", interpolation = "area")
 
     # let's do a bit of enhancement of the channel
     #quartz(width = 10, title = paste("Equalized", window_title))
 
     # equalized histogram
-    Rvision::display(Rvision::histEq(img), window_name = "enhanced")
+    Rvision::display(Rvision::histEq(img), window_name = "enhanced", interpolation = "area")
 
     first_guess <- readline("what is your first guess for AP level? :> ")
 
